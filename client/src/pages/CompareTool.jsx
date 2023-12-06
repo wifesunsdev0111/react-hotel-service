@@ -1,34 +1,5 @@
-import { React, useState } from "react";
-import {
-  Box,
-  useMediaQuery,
-  Button,
-  Paper,
-  InputBase,
-  Typography,
-  useTheme,
-  Grid,
-  Alert,
-  AlertTitle,
-  Stack
-} from "@mui/material";
-
-import Header from "../components/Common/Header";
-import firstBackground from "../assets/images/first-background.png";
-import booking from "../assets/images/booking.png";
-import agoda from "../assets/images/agoda.png";
-import makemytrip from "../assets/images/makemytrip.png";
-import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
-import { Search } from "@mui/icons-material";
-import { styled } from "@mui/material/styles";
-import DataTable from "../components/Common/DataTable.tsx";
-import {
-  useGetZipCodesQuery,
-  useGetPopularZipCodesQuery,
-  useGetRecentZipCodesQuery
-} from "../services/api/api";
-import CircularProgress from "@mui/material/CircularProgress";
-import isEmpty from "../utils/isEmpty";
+import { React } from "react";
+import { Box, useMediaQuery } from "@mui/material";
 import LineChart from "../components/Common/LineChart.jsx";
 import BarChart from "../components/Common/BarChart.jsx";
 import PieChartBottom from "../components/Common/PieChartBottom.jsx";
@@ -41,8 +12,8 @@ const CompareTool = () => {
       "1939Color": "hsl(68, 70%, 50%)"
     },
     {
-      xname: "makemytripe.com",
-      "makemytripe.com": 234,
+      xname: "makemytrip.com",
+      "makemytrip.com": 234,
       "1940sColor": "hsl(292, 70%, 50%)"
     },
     {
@@ -52,7 +23,7 @@ const CompareTool = () => {
     }
   ];
 
-  const barchartKey = ["booking.com", "makemytripe.com", "agoda.com"];
+  const barchartKey = ["booking.com", "makemytrip.com", "agoda.com"];
 
   const lineData = [
     {
@@ -240,61 +211,7 @@ const CompareTool = () => {
     }
   ];
 
-  const [searchValue, setSearchValue] = useState("start search");
-  const [inputValue, setInputValue] = useState("");
-
-  const { data: recentZipCodesData, isLoading: recentZipCodesLoading } =
-    useGetRecentZipCodesQuery();
-  const { data: popularZipCodeData, isLoading: popularZipCodesLoading } =
-    useGetPopularZipCodesQuery();
-
-  const { data, isLoading } = useGetZipCodesQuery({
-    searchValue
-  });
-
-  const handleButtonClick = () => {
-    if (inputValue === "") {
-      setSearchValue("start search");
-    } else {
-      setSearchValue(inputValue);
-    }
-  };
-
-  const handleFormSubmit = (event) => {
-    event.preventDefault(); // Prevent form submission and page reload
-    // Process the input value or perform any other necessary action
-    if (inputValue === "") {
-      setSearchValue("start search");
-    } else {
-      setSearchValue(inputValue);
-    }
-  };
-
-  //Search by State info click
-  const handleStateSearch = (data) => {
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: "smooth" // Optionally, you can add smooth scrolling behavior
-    });
-    setInputValue(data);
-    setSearchValue(data);
-  };
-
-  const handleInputChange = (event) => {
-    setInputValue(event.target.value);
-  };
-
   const isNonMediumScreens = useMediaQuery("(min-width: 1200px)");
-  const theme = useTheme();
-
-  const Item = styled(Paper)(({ theme }) => ({
-    ...theme.typography.body2,
-    textAlign: "center",
-    color: theme.palette.text.secondary,
-    height: 60,
-    lineHeight: "60px"
-  }));
 
   return (
     <Box mt="8rem">
@@ -321,6 +238,7 @@ const CompareTool = () => {
             gridColumn: isNonMediumScreens ? undefined : "span 12"
           }
         }}
+        cd
       >
         <PieChartBottom
           title={"Compare total number of hotels"}

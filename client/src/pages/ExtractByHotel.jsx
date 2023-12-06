@@ -7,10 +7,7 @@ import {
   InputBase,
   Typography,
   useTheme,
-  Grid,
-  Alert,
-  AlertTitle,
-  Stack
+  Grid
 } from "@mui/material";
 
 import Header from "../components/Common/Header.jsx";
@@ -18,95 +15,23 @@ import background from "../assets/images/background-hotel.jpg";
 import booking from "../assets/images/booking.png";
 import agoda from "../assets/images/agoda.png";
 import makemytrip from "../assets/images/makemytrip.png";
-import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
 import { Search } from "@mui/icons-material";
-import { styled } from "@mui/material/styles";
 import DataTable from "../components/Common/DataTable.tsx";
 import {
   useGetZipCodesQuery,
   useGetPopularZipCodesQuery,
   useGetRecentZipCodesQuery
 } from "../services/api/api.js";
-import CircularProgress from "@mui/material/CircularProgress";
 import isEmpty from "../utils/isEmpty.jsx";
 
 const ExtractByHotel = () => {
-  const stateData = [
-    [
-      "Alabama",
-      "Alaska",
-      "Arizona",
-      "Arkansas",
-      "California",
-      "Colorado",
-      "Connecticut",
-      "Delaware",
-      "Florida"
-    ],
-    [
-      "Georgia",
-      "Hawaii",
-      "Idaho",
-      "Illinois",
-      "Indiana",
-      "Iowa",
-      "Kansas",
-      "Kentucky",
-      "Louisiana"
-    ],
-    [
-      "Maine",
-      "Maryland",
-      "Massachusetts",
-      "Michigan",
-      "Minnesota",
-      "Mississippi",
-      "Missouri",
-      "Montana",
-      "Nebraska"
-    ],
-    [
-      "Nevada",
-      "New Hampshire",
-      "New Jersey",
-      "New Mexico",
-      "New York",
-      "North Carolina",
-      "North Dakota",
-      "Ohio",
-      "Oklahoma"
-    ],
-    [
-      "Oregon",
-      "Pennsylvania",
-      "Puerto Rico",
-      "Rhode Island",
-      "South Carolina",
-      "South Dakota",
-      "Tennessee",
-      "Texas",
-      "Utah"
-    ],
-    [
-      "Vermont",
-      "Virginia",
-      "Washington",
-      "Washington, DC",
-      "West Virginia",
-      "Wisconsin",
-      "Wyoming"
-    ]
-  ];
-
   const [searchValue, setSearchValue] = useState("start search");
   const [inputValue, setInputValue] = useState("");
 
-  const { data: recentZipCodesData, isLoading: recentZipCodesLoading } =
-    useGetRecentZipCodesQuery();
-  const { data: popularZipCodeData, isLoading: popularZipCodesLoading } =
-    useGetPopularZipCodesQuery();
+  const { data: recentZipCodesData } = useGetRecentZipCodesQuery();
+  const { data: popularZipCodeData } = useGetPopularZipCodesQuery();
 
-  const { data, isLoading } = useGetZipCodesQuery({
+  const { data } = useGetZipCodesQuery({
     searchValue
   });
 
@@ -145,14 +70,6 @@ const ExtractByHotel = () => {
 
   const isNonMediumScreens = useMediaQuery("(min-width: 1200px)");
   const theme = useTheme();
-
-  const Item = styled(Paper)(({ theme }) => ({
-    ...theme.typography.body2,
-    textAlign: "center",
-    color: theme.palette.text.secondary,
-    height: 60,
-    lineHeight: "60px"
-  }));
 
   return (
     <Box mt="8rem">

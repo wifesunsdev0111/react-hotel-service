@@ -13,7 +13,6 @@ import { styled } from "@mui/material/styles";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import Twitter from "@mui/icons-material/Twitter";
-import ForwardIcon from "@mui/icons-material/Forward";
 import { Link } from "react-router-dom";
 
 const MainFooter = () => {

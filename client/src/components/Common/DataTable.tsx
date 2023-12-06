@@ -68,7 +68,7 @@ const DataTable: React.FC<DataTableProps> = ({ rows }) => {
   });
 
   React.useEffect(() => {
-    if(rowData.length == 1){
+    if(rowData.length === 1){
       setSelectedZip(rowData[0].zip)
     }else if (selectedRowId !== null) {
       const selectedRowData = rowData.find((row) => row.id === selectedRowId);

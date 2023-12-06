@@ -12,7 +12,6 @@ import {
   useTheme
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import ForwardIcon from "@mui/icons-material/Forward";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import logo from "../../assets/images/main-logo.png";
 import navItems from "../../data/mainHeaderItem";
@@ -185,7 +184,7 @@ export default function MainHeader() {
             <Box
               sx={{
                 height: "0.5rem",
-                ml: "20vw",
+                ml: "25vw",
                 display: { xs: "none", md: "flex" }
               }}
             >

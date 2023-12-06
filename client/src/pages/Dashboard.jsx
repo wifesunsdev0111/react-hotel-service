@@ -3,14 +3,8 @@ import {
   Box,
   useMediaQuery,
   Button,
-  Paper,
-  InputBase,
   Typography,
-  useTheme,
-  Grid,
-  Alert,
-  AlertTitle,
-  Stack
+  useTheme
 } from "@mui/material";
 
 import Header from "../components/Common/Header";
@@ -18,141 +12,40 @@ import firstBackground from "../assets/images/first-background.png";
 import booking from "../assets/images/booking.png";
 import agoda from "../assets/images/agoda.png";
 import makemytrip from "../assets/images/makemytrip.png";
-import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
 import { Download } from "@mui/icons-material";
-import { styled } from "@mui/material/styles";
 import DataTable from "../components/Common/DataTable.tsx";
-import {
-  useGetZipCodesQuery,
-  useGetPopularZipCodesQuery,
-  useGetRecentZipCodesQuery
-} from "../services/api/api";
-import CircularProgress from "@mui/material/CircularProgress";
+import { useGetZipCodesQuery } from "../services/api/api";
 import isEmpty from "../utils/isEmpty";
+import axios from "axios";
 
 const Dashboard = () => {
-  const stateData = [
-    [
-      "Alabama",
-      "Alaska",
-      "Arizona",
-      "Arkansas",
-      "California",
-      "Colorado",
-      "Connecticut",
-      "Delaware",
-      "Florida"
-    ],
-    [
-      "Georgia",
-      "Hawaii",
-      "Idaho",
-      "Illinois",
-      "Indiana",
-      "Iowa",
-      "Kansas",
-      "Kentucky",
-      "Louisiana"
-    ],
-    [
-      "Maine",
-      "Maryland",
-      "Massachusetts",
-      "Michigan",
-      "Minnesota",
-      "Mississippi",
-      "Missouri",
-      "Montana",
-      "Nebraska"
-    ],
-    [
-      "Nevada",
-      "New Hampshire",
-      "New Jersey",
-      "New Mexico",
-      "New York",
-      "North Carolina",
-      "North Dakota",
-      "Ohio",
-      "Oklahoma"
-    ],
-    [
-      "Oregon",
-      "Pennsylvania",
-      "Puerto Rico",
-      "Rhode Island",
-      "South Carolina",
-      "South Dakota",
-      "Tennessee",
-      "Texas",
-      "Utah"
-    ],
-    [
-      "Vermont",
-      "Virginia",
-      "Washington",
-      "Washington, DC",
-      "West Virginia",
-      "Wisconsin",
-      "Wyoming"
-    ]
-  ];
+  const [searchValue] = useState("start search");
 
-  const [searchValue, setSearchValue] = useState("start search");
-  const [inputValue, setInputValue] = useState("");
-
-  const { data: recentZipCodesData, isLoading: recentZipCodesLoading } =
-    useGetRecentZipCodesQuery();
-  const { data: popularZipCodeData, isLoading: popularZipCodesLoading } =
-    useGetPopularZipCodesQuery();
-
-  const { data, isLoading } = useGetZipCodesQuery({
+  const { data } = useGetZipCodesQuery({
     searchValue
   });
 
-  const handleButtonClick = () => {
-    if (inputValue === "") {
-      setSearchValue("start search");
-    } else {
-      setSearchValue(inputValue);
+  const handleButtonClick = async () => {
+    const options = {
+      method: "GET",
+      url: "https://booking-com-api3.p.rapidapi.com/booking/cities",
+      headers: {
+        Accept: "application/json",
+        "X-RapidAPI-Key": "1546712951mshf2ee034b86ea596p13aad8jsna3aa04ed7f1d",
+        "X-RapidAPI-Host": "booking-com-api3.p.rapidapi.com"
+      }
+    };
+
+    try {
+      const response = await axios.request(options);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
     }
-  };
-
-  const handleFormSubmit = (event) => {
-    event.preventDefault(); // Prevent form submission and page reload
-    // Process the input value or perform any other necessary action
-    if (inputValue === "") {
-      setSearchValue("start search");
-    } else {
-      setSearchValue(inputValue);
-    }
-  };
-
-  //Search by State info click
-  const handleStateSearch = (data) => {
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: "smooth" // Optionally, you can add smooth scrolling behavior
-    });
-    setInputValue(data);
-    setSearchValue(data);
-  };
-
-  const handleInputChange = (event) => {
-    setInputValue(event.target.value);
   };
 
   const isNonMediumScreens = useMediaQuery("(min-width: 1200px)");
   const theme = useTheme();
-
-  const Item = styled(Paper)(({ theme }) => ({
-    ...theme.typography.body2,
-    textAlign: "center",
-    color: theme.palette.text.secondary,
-    height: 60,
-    lineHeight: "60px"
-  }));
 
   return (
     <Box mt="8rem">
